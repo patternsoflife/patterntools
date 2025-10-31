@@ -1,20 +1,20 @@
 {
-  "name": "@redesigningpsychiatry/patterns",
-  "version": "1.0.3",
-  "description": "Redesigning Psychiatry pattern specification",
+  "name": "@patternsoflife/patterns",
+  "version": "1.0.0-alpha.1",
+  "description": "Problem-sustaining patterns in TypeScript",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "redesigningpsychiatry/patterns-js",
+  "repository": "patternsoflife/patterntools",
   "author": "Sander Voerman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/redesigningpsychiatry/patterns-js/issues"
+    "url": "https://github.com/patternsoflife/patterntools/issues"
   },
-  "homepage": "https://github.com/redesigningpsychiatry/patterns-js#readme",
+  "homepage": "https://patternsoflife.nl/en/",
   "devDependencies": {
     "typescript": "^4.5.4"
   },
