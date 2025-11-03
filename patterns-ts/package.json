@@ -1,0 +1,24 @@
+{
+  "name": "@patternsoflife/patterns",
+  "version": "1.0.0-alpha.1",
+  "description": "Problem-sustaining patterns in TypeScript",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "patternsoflife/patterntools",
+  "author": "Sander Voerman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patternsoflife/patterntools/issues"
+  },
+  "homepage": "https://patternsoflife.nl/en/",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
