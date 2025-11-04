@@ -8,7 +8,10 @@
     "build": "tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "patternsoflife/patterntools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patternsoflife/patterntools.git"
+  },
   "author": "Sander Voerman",
   "license": "MIT",
   "bugs": {
