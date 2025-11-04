@@ -11,7 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/patternsoflife/patterntools.git"
+    "url": "git+https://github.com/patternsoflife/patterntools.git",
+    "directory": "patterns-ts"
   },
   "author": "Sander Voerman",
   "license": "MIT",
