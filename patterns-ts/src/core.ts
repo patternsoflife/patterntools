@@ -35,3 +35,52 @@ export class NodeDefinition {
     public isCustom = true,
   ) {}
 }
+
+
+// Temporary solution
+// TODO: refactor
+export const isThought = (roleCat: RoleCategory) => (roleCat.id === 5);
+
+
+export class Pattern {
+  constructor(
+    public name: string,
+    public nodes: PatternNode[],
+    public edges: PatternEdge[],
+    public pos: [number, number] = [0, 0],
+    public zoom: number = 1,
+    public locale: string,
+  ) {}
+}
+
+
+export class PatternNode {
+  constructor(
+    public def: NodeDefinition,
+    public pos: [number, number],
+    public crossRevisionId: string,
+    public customName = '',
+    public description = '',
+  ) {}
+
+  get name(): string {
+    return this.customName || this.def.name;
+  }
+
+  get hyphenatedName(): string {
+    return this.customName || this.def.hyphenatedName;
+  }
+}
+
+
+export class PatternEdge {
+  nodes: [PatternNode, PatternNode];
+
+  constructor(
+    a: PatternNode,
+    b: PatternNode,
+    public crossRevisionId: string,
+  ) {
+    this.nodes = [a, b];
+  }
+}
