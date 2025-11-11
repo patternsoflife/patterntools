@@ -49,7 +49,7 @@ export class Pattern {
     public edges: PatternEdge[],
     public pos: [number, number] = [0, 0],
     public zoom: number = 1,
-    public locale: string,
+    public locale: string = 'en',
   ) {}
 }
 
