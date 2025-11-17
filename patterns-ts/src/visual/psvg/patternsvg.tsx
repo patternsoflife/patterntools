@@ -4,11 +4,11 @@
 
 import React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { Pattern } from '@patternsoflife/patterns';
-import { PatternSVGConfig, SvgContext } from './config';
-import { SvgDocument } from './kit';
-import { NodeSVG } from './nodes';
-import { EdgeSVG } from './edges';
+import { Pattern } from '../../core.js';
+import { PatternSVGConfig, SvgContext } from './config.js';
+import { SvgDocument } from './kit.js';
+import { NodeSVG } from './nodes.js';
+import { EdgeSVG } from './edges.js';
 
 
 // TODO: Refactor and integrate with the css styling of the graph editor

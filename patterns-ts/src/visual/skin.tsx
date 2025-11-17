@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import { RoleCategory, isThought } from "@patternsoflife/patterns";
+import { RoleCategory, isThought } from "../core.js";
 
 
 export const CARD_SIZE_BB: [number, number] = [140, 180];

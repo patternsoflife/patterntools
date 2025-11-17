@@ -2,6 +2,6 @@
  * Pattern visualization.
  */
 
-export * from './skin';
-export * from './utils';
-export * from './psvg';
+export * from './skin.js';
+export * from './utils.js';
+export * from './psvg/index.js';

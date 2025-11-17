@@ -3,8 +3,8 @@
  */
 
 import React, { ReactNode, useContext } from 'react';
-import { COLOR, CARD_SIZE_THOUGHT, ArrowMarker } from '../skin';
-import { SvgContext } from './config';
+import { COLOR, CARD_SIZE_THOUGHT, ArrowMarker } from '../skin.js';
+import { SvgContext } from './config.js';
 
 
 export const CARD_BORDER = 8;
@@ -71,18 +71,18 @@ export const Card = ({ pos, size, children }: {
   const { useDropShadows } = useContext(SvgContext);
   return (
     <g>
-        { useDropShadows || <AltShadow pos={pos} size={size} /> }
-        <rect
-          x={pos[0]}
-          y={pos[1]}
-          width={size[0]}
-          height={size[1]}
-          rx={CARD_RADIUS}
-          ry={CARD_RADIUS}
-          fill={COLOR.CARD}
-          {...(useDropShadows ? {filter: 'url(#p2s_shadow)'} : {})}
-        />
-        { children }
+      {useDropShadows || <AltShadow pos={pos} size={size} />}
+      <rect
+        x={pos[0]}
+        y={pos[1]}
+        width={size[0]}
+        height={size[1]}
+        rx={CARD_RADIUS}
+        ry={CARD_RADIUS}
+        fill={COLOR.CARD}
+        {...(useDropShadows ? { filter: 'url(#p2s_shadow)' } : {})}
+      />
+      {children}
     </g>
   );
 };
@@ -94,10 +94,10 @@ export const Field = ({ cardPos, cardSize, color }: {
   color: string,
 }) => (
   <rect
-    x={cardPos[0] + CARD_BORDER }
-    y={cardPos[1] + CARD_BORDER }
-    width={cardSize[0] - (2 * CARD_BORDER) }
-    height={cardSize[1] - (2 * CARD_BORDER) }
+    x={cardPos[0] + CARD_BORDER}
+    y={cardPos[1] + CARD_BORDER}
+    width={cardSize[0] - (2 * CARD_BORDER)}
+    height={cardSize[1] - (2 * CARD_BORDER)}
     rx={CARD_FIELD_RADIUS}
     ry={CARD_FIELD_RADIUS}
     fill={color}
@@ -125,7 +125,7 @@ export const TextBox = ({ pos, text, lineHeight, className, maxLines = 0 }: {
         x={pos[0]}
         y={pos[1] + (lineHeight * index)}
         className={className}
-      >{ line }</text>
+      >{line}</text>
     ))
   }</>;
 };
@@ -178,7 +178,7 @@ export const SvgDocument = ({ pos, size, children }: {
         }
       `}</style>
       <defs>
-        { useDropShadows &&
+        {useDropShadows &&
           <filter id='p2s_shadow'>
             <feDropShadow dx='0' dy='2' stdDeviation='1' floodOpacity='0.3' />
             <feDropShadow dx='0' dy='0' stdDeviation='2' floodOpacity='0.2' />
@@ -190,7 +190,7 @@ export const SvgDocument = ({ pos, size, children }: {
         <ArrowMarker id='p2s_arrowmarker' className='p2s_arrowhead' cairo />
       </defs>
       <rect x={pos[0]} y={pos[1]} width={size[0]} height={size[1]} fill={COLOR.BG_AIR} />
-      { children }
+      {children}
     </svg>
   );
 };

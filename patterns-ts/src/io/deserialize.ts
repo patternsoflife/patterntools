@@ -10,12 +10,12 @@ import {
   Pattern,
   PatternNode,
   PatternEdge,
-} from "@patternsoflife/patterns";
+} from "../core.js";
 import {
   CategoryFields,
   NodeDefinitionFields,
   PatternLongFields,
-} from "./types";
+} from "./types.js";
 
 
 const deserializeContextCat = (data: CategoryFields): ContextCategory => ({
@@ -68,7 +68,7 @@ export class PatternDeserializer {
     if (!data.is_generic) {
       def.name = data.name;
     }
-    def.iconName = data.icon;
+    def.iconName = data.icon || '';
     def.explanation = data.explanation;
     def.hyphenatedName = data.hyphenated_name;
     return def;

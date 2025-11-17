@@ -3,15 +3,15 @@
  */
 
 import React from 'react';
-import { PatternNode, isThought } from '@patternsoflife/patterns';
-import { simpleWordWrap } from './text';
+import { PatternNode, isThought } from '../../core.js';
 import {
   CARD_SIZE_BB,
   CARD_SIZE_THOUGHT,
   CARD_SIZE_CONS,
   COLOR,
-} from '../skin';
-import { Card, Field, ThoughtBubble, TextBox, CARD_BORDER } from './kit';
+} from '../skin.js';
+import { simpleWordWrap } from './text.js';
+import { Card, Field, ThoughtBubble, TextBox, CARD_BORDER } from './kit.js';
 
 
 const TITLE_WIDTH_CHARS_BB = 13;

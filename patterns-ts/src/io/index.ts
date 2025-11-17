@@ -2,5 +2,5 @@
  * Pattern I/O.
  */
 
-export * from './types';
-export * from './deserialize';
+export * from './types.js';
+export * from './deserialize.js';

@@ -2,5 +2,5 @@
  * Pattern SVG generator.
  */
 
-export type { PatternSVGConfig } from './config';
-export * from './patternsvg';
+export type { PatternSVGConfig } from './config.js';
+export * from './patternsvg.js';
