@@ -20,6 +20,13 @@
     "url": "https://github.com/patternsoflife/patterntools/issues"
   },
   "homepage": "https://patternsoflife.nl/en/",
+  "dependencies": {
+    "@types/react": "^19.1.8",
+    "@xyflow/react": "^12.7.1",
+    "@types/react-dom": "^19.1.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
   "devDependencies": {
     "typescript": "^5.9.3"
   },
