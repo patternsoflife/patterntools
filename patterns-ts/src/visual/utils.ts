@@ -1,5 +1,7 @@
 /**
  * Visualization utilities.
+ * 
+ * Based on the Floating Edge example code from React Flow.
  */
 
 import { Position } from '@xyflow/react';
