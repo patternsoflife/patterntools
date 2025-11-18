@@ -33,6 +33,23 @@ const deserializeRoleCat = (data: CategoryFields): RoleCategory => ({
 });
 
 
+class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+
+const validate = <K, V>(map: ReadonlyMap<K, V>, id: K, entity: string): V => {
+  const v = map.get(id);
+  if (v === undefined) {
+    throw new ValidationError(`Unknown ${entity} id: ${id}`);
+  }
+  return v;
+}
+
+
 /**
  * Deserializer for patterns and associated classes.
  */
@@ -60,8 +77,8 @@ export class PatternDeserializer {
 
   private _deserializeNodeDef = (data: NodeDefinitionFields): NodeDefinition => {
     const def = new NodeDefinition(
-      this.contextCatsById.get(data.context),
-      this.roleCatsById.get(data.role),
+      validate(this.contextCatsById, data.context, "context category"),
+      validate(this.roleCatsById, data.role, "role category"),
       data.is_generic,
     );
     def.id = data.id;
@@ -77,7 +94,7 @@ export class PatternDeserializer {
   deserializePattern = (data: PatternLongFields): Pattern => {
     const nodeMap = new Map(
       data.nodes.map(n => [n.id, new PatternNode(
-        this.nodeDefsById.get(n.definition),
+        validate(this.nodeDefsById, n.definition, "node definition"),
         [n.position_x, n.position_y],
         n.cross_revision_id,
         n.custom_name,
@@ -86,8 +103,8 @@ export class PatternDeserializer {
     );
 
     const edges = data.edges.map(e => new PatternEdge(
-      nodeMap.get(e.source),
-      nodeMap.get(e.target),
+      validate(nodeMap, e.source, "node"),
+      validate(nodeMap, e.target, "node"),
       e.cross_revision_id,
     ));
 
