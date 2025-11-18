@@ -1,6 +1,6 @@
 {
   "name": "@patternsoflife/patterns",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "Problem-sustaining patterns in TypeScript",
   "type": "module",
   "main": "./lib/index.js",
@@ -20,6 +20,13 @@
     "url": "https://github.com/patternsoflife/patterntools/issues"
   },
   "homepage": "https://patternsoflife.nl/en/",
+  "dependencies": {
+    "@types/react": "^19.1.8",
+    "@xyflow/react": "^12.7.1",
+    "@types/react-dom": "^19.1.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
   "devDependencies": {
     "typescript": "^5.9.3"
   },
