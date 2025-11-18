@@ -65,6 +65,19 @@
     /* Enable all strict type-checking options. */
     "strict": true,
 
+    /*
+     * Allow incremental typing.
+     *
+     * Some function parameters in this codebase have not been typed yet.
+     * This setting prevents TypeScript from complaining about it.
+     *
+     * TODO: change this setting and fix all typechecking errors by adding
+     * type definitions where needed.
+     *
+     * See https://github.com/patternsoflife/patterntools/issues/20
+     */
+    "noImplicitAny": false,
+
     /* Convert JSX components to vanilla JS using React JSX transforms. */
     "jsx": "react-jsx",
 
