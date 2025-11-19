@@ -7,7 +7,8 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src/ --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,11 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "eslint": "^9.39.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.35.0"
   },
   "publishConfig": {
     "access": "public"
