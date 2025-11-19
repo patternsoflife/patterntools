@@ -1,6 +1,6 @@
 {
   "name": "@patternsoflife/patterns",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "Problem-sustaining patterns in TypeScript",
   "type": "module",
   "main": "./lib/index.js",
