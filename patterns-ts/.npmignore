@@ -1,5 +1,6 @@
 # TypeScript input
 src/
+tsconfig.json
 
 # VS Code
 .vscode/
