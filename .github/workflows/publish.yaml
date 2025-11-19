@@ -18,7 +18,7 @@ jobs:
       matrix:
         package:
           - patterns-ts
-          - patterns-ts-cli
+          # - patterns-ts-cli
 
     steps:
       - name: Checkout repository
@@ -27,17 +27,23 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd ${{ matrix.package }}
+          npm ci
 
       - name: Lint code
-        run: npm run lint
+        run: |
+          cd ${{ matrix.package }}
+          npm run lint
 
       - name: Run typecheck
-        run: npm run typecheck
+        run: |
+          cd ${{ matrix.package }}
+          npm run typecheck
 
       - name: Publish package
         run: |
