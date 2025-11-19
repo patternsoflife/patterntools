@@ -1,0 +1,60 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - production
+
+permissions:
+  contents: read
+  id-token: write  # Required for OIDC
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package:
+          - patterns-ts
+          # - patterns-ts-cli
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: |
+          cd ${{ matrix.package }}
+          npm ci
+
+      - name: Lint code
+        run: |
+          cd ${{ matrix.package }}
+          npm run lint
+
+      - name: Run typecheck
+        run: |
+          cd ${{ matrix.package }}
+          npm run typecheck
+
+      - name: Publish package
+        run: |
+          cd ${{ matrix.package }}
+          VERSION=$(jq -r .version package.json)
+
+          if echo "$VERSION" | grep -q '-'; then
+            TAG=$(echo "$VERSION" | tr -cd 'a-zA-Z')
+            echo "Publishing ${{ matrix.package }} version $VERSION with tag $TAG"
+            npm publish --access public --tag "$TAG"
+          else
+            echo "Publishing ${{ matrix.package }} version $VERSION as latest"
+            npm publish --access public
+          fi

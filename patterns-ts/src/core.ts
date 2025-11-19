@@ -13,8 +13,7 @@ export interface NodeCategory {
 }
 
 
-export interface RoleCategory extends NodeCategory {
-}
+export type RoleCategory = NodeCategory;
 
 
 export interface ContextCategory extends NodeCategory {
