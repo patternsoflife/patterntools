@@ -1,6 +1,6 @@
 {
   "name": "@patternsoflife/patterns",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "Problem-sustaining patterns in TypeScript",
   "type": "module",
   "main": "./lib/index.js",
@@ -32,5 +32,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./io": "./lib/io/index.js",
+    "./visual": "./lib/visual/index.js"
   }
 }
