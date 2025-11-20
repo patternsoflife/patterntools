@@ -1,5 +1,5 @@
 # Pattern Tools
-Libraries and tooling used within the Patterns of Life project.
+Open-source libraries and tools used within the Patterns of Life project.
 
 ## TypeScript npm packages
 This repository contains the following two TypeScript libraries:
