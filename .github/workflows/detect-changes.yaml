@@ -26,7 +26,7 @@ jobs:
         uses: dorny/paths-filter@v3
         id: filter
         with:
-          base: ${{ github.event.before }}
+          base: ${{ github.event.pull_request != null && github.event.pull_request.base.sha || github.event.before }}
           filters: |
             patterns-ts:
               - 'patterns-ts/**'
