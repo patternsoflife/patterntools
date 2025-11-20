@@ -1,5 +1,5 @@
-name: 'Quality Checks'
-description: 'Run linting and typecheck for a package'
+name: 'TypeScript Quality Checks'
+description: 'Run linting and typecheck for an npm package'
 
 inputs:
   package:

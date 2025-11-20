@@ -36,6 +36,6 @@ jobs:
 
       - name: Run quality checks
         if: matrix.changed == true
-        uses: ./.github/actions/quality-checks
+        uses: ./.github/actions/quality-checks-ts
         with:
           package: ${{ matrix.package }}
