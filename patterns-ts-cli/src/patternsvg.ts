@@ -21,7 +21,9 @@ const readAll = async () => {
     "definitions/node_definitions.json",
     "mypattern.json"
   ].map(readJSONFile));
-  console.log(contextCatData);
+  console.log([
+    contextCatData, roleCatData, nodeDefData, patternData
+  ]);
 };
 
 
