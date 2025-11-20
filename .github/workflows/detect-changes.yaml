@@ -1,0 +1,34 @@
+name: Detect Package Changes
+
+on:
+  workflow_call:
+    outputs:
+      patterns-ts:
+        description: 'Whether patterns-ts has changes'
+        value: ${{ jobs.detect-changes.outputs.patterns-ts }}
+      patterns-ts-cli:
+        description: 'Whether patterns-ts-cli has changes'
+        value: ${{ jobs.detect-changes.outputs.patterns-ts-cli }}
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      patterns-ts: ${{ steps.filter.outputs.patterns-ts }}
+      patterns-ts-cli: ${{ steps.filter.outputs.patterns-ts-cli }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          base: ${{ github.event.pull_request != null && github.event.pull_request.base.sha || github.event.before }}
+          filters: |
+            patterns-ts:
+              - 'patterns-ts/**'
+            patterns-ts-cli:
+              - 'patterns-ts-cli/**'
