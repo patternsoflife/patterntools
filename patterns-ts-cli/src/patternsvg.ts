@@ -1,37 +1,40 @@
 #!/usr/bin/env node
-import { readFile } from "node:fs/promises";
-// import { Pattern } from "@patternsoflife/patterns";
-// import { PatternDeserializer } from "@patternsoflife/patterns/io";
-// import { pattern2svg } from "@patternsoflife/patterns/visual";
+import { readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { Pattern } from "@patternsoflife/patterns";
+import { PatternDeserializer } from "@patternsoflife/patterns/io";
+import { pattern2svg } from "@patternsoflife/patterns/visual";
 
 
-
-const readJSONFile = async (path: string): Promise<string> => {
+const readJSONFile = async (path: string) => {
   const data = await readFile(path, { encoding: 'utf8' });
   return JSON.parse(data);
 };
 
 
-const readAll = async () => {
+const readPattern = async (path: string): Promise<Pattern> => {
   const [
     contextCatData, roleCatData, nodeDefData, patternData
   ] = await Promise.all([
     "definitions/context_categories.json",
     "definitions/role_categories.json",
     "definitions/node_definitions.json",
-    "mypattern.json"
+    path
   ].map(readJSONFile));
-  console.log([
-    contextCatData, roleCatData, nodeDefData, patternData
-  ]);
+
+  const deserializer = new PatternDeserializer(
+    contextCatData, roleCatData, nodeDefData
+  );
+
+  return deserializer.deserializePattern(patternData);
 };
 
-
-await readAll();
-
-
-// const p = new Pattern("test", [], []);
-// const s = pattern2svg(p, { useDropShadows: true });
-
-
-
+const sourcePath = process.argv[2];
+if (sourcePath === undefined) {
+  console.log("Please specify the pattern file as an argument to patternsvg");
+} else {
+  const destPath = `${path.parse(sourcePath).name}.svg`;
+  const pattern = await readPattern(sourcePath);
+  const svg = pattern2svg(pattern, { useDropShadows: true });
+  await writeFile(destPath, svg);
+}
