@@ -1,0 +1,41 @@
+name: NPM packages CI
+
+on:
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - 'patterns-ts/**'
+      - 'patterns-ts-cli/**'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  detect-changes:
+    uses: ./.github/workflows/detect-changes.yaml
+
+  quality-checks:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - package: patterns-ts
+            changed: ${{ needs.detect-changes.outputs.patterns-ts == 'true' }}
+          - package: patterns-ts-cli
+            changed: ${{ needs.detect-changes.outputs.patterns-ts-cli == 'true' }}
+
+    steps:
+      - name: Checkout repository
+        if: matrix.changed == true
+        uses: actions/checkout@v4
+
+      - name: Run quality checks
+        if: matrix.changed == true
+        uses: ./.github/actions/quality-checks-ts
+        with:
+          package: ${{ matrix.package }}
