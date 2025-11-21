@@ -16,6 +16,8 @@ If you have the `patterntools` git repository checked out on your system for
 local development, you can also install this package in development mode:
 ```
 cd patterns-ts-cli
+npm install
+npm run build
 npm link
 ```
 This will make the `patternjs` globally command available by linking it to
