@@ -1,48 +1,37 @@
 # Patterns NodeJS CLI
-This package contains command-line scripts that invoke functionality
+This package contains command-line NodeJS scripts that invoke functionality
 from the [patterns](https://www.npmjs.com/package/@patternsoflife/patterns)
 package.
 
-## Installation and running scripts
-
-### Local installation
-To make the scripts in this package available in a local project directory,
-make sure you have Node and npm installed on your system, and then run:
-
+## Installation
+Easiest is to install this package globally on your system:
 ```
-npm install @patternsoflife/patterns-cli
+npm i -g @patternsoflife/patterns-cli
 ```
+This will make the `patternjs` command available.
 
+## Running a script
 You can now run scripts in the following way:
-
 ```
-npm exec patternsvg mypattern.json
+patternjs <cmd> [args]
 ```
-
-To make the commands globally available from any directory, install the
-package as follows:
-
+Where `<cmd>` specifies the script to run and `[args]` the arguments,
+if any, needed to run the script. For example:
 ```
-npm install -g @patternsoflife/patterns-cli
+patternjs svg mypattern.json
 ```
 
-On Windows, this will add all the commands from this package to your `PATH`
-environment variable. You can then run the command from any directory
-without having to prefix it with `npm exec`:
-
+## Getting help
+For more information about the available commands, run:
 ```
-patternsvg mypattern.json
+patternjs -h
 ```
-
-
-## SVG generator
-This package currently provides the `patternsvg` command. The syntax is as
-follows:
-
+For help on a specific command, run:
 ```
-patternsvg mypattern.json
+patternjs <cmd> -h
 ```
 
-This command will assume that there is a `definitions` directory containing
-the `context_categories.json`, `role_categories.json`, and
+## Definitions for SVG generator
+The `patternjs svg` command assumes that there is a `definitions` directory
+containing the `context_categories.json`, `role_categories.json`, and
 `node_definitions.json` files.
