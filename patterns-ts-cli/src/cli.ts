@@ -34,7 +34,7 @@ yargs(hideBin(process.argv))
     }
   })
 
-  // Fail when there are insufficient or unrecognizated arguments.
+  // Fail when there are insufficient or unrecognized arguments.
   .demandCommand(1)
   .strict()
 
