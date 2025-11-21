@@ -20,7 +20,7 @@ npm install
 npm run build
 npm link
 ```
-This will make the `patternjs` globally command available by linking it to
+This will make the `patternjs` command globally available by linking it to
 the `bin` entrypoint in your `package.json`. After rebuilding the package
 with `npm run build`, the global command will reflect the changes.
 
