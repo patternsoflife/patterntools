@@ -1,0 +1,71 @@
+{
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+
+    /*
+     * Which javascript features to use in the compiled output files.
+     * 
+     * Web application bundlers will transpile the emitted code further down
+     * when this package is imported. Node applications should run on recent
+     * node versions that support current javascript features. Therefore, we
+     * simply compile to esnext when publishing to npm.
+     */
+    "target": "esnext",
+
+    /*
+     * Which types and features to assume to be present in the runtime.
+     *
+     * Note that there is no "dom" in this list since this package is going
+     * to be imported by web as well as node applications, the latter having
+     * no dom builtins.
+     */
+    "lib": ["esnext"],
+
+    /* 
+     * The module output format.
+     * 
+     * We use "nodenext" in combination with the "type": "module" setting in
+     * package.json, which will cause .ts files to be compiled as ESM modules
+     * and written to .js files. This is the recommended setting for libraries
+     * that are intended to work with bundlers as well as nodejs.
+     *
+     * See https://www.typescriptlang.org/docs/handbook/modules/theory.html
+     * for a detailed explanation.
+     */
+    "module": "nodenext",
+
+    /*
+     * The module resolution rules.
+     *
+     * When we import foo from 'bar', this setting determines the rules on how
+     * to interpret 'bar'. For modern environments there are essentially two
+     * possible values: "bundler" or "nodenext". The "bundler" setting allows
+     * extensionless relative imports, such as import foo from './bar', which
+     * work fine in esbuild but are prohibited by nodejs. The "nodenext"
+     * setting forces us to write import foo from './bar.js', which is what we
+     * need to do in order to prevent nodejs from throwing an error.
+     */
+    "moduleResolution": "nodenext",
+
+    /* Specify the root folder within your source files. */
+    "rootDir": "src",
+
+    /* Specify an output folder for all emitted files. */
+    "outDir": "lib",
+
+    /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
+    "declaration": true,
+
+    /* Emit additional JavaScript to ease support for importing CommonJS modules. */
+    "esModuleInterop": true,
+
+    /* Ensure that casing is correct in imports. */
+    "forceConsistentCasingInFileNames": true,
+
+    /* Enable all strict type-checking options. */
+    "strict": true,
+
+    /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true
+  }
+}

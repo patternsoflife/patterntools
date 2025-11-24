@@ -1,0 +1,42 @@
+{
+  "name": "@patternsoflife/patterns-cli",
+  "version": "1.0.0-alpha.1",
+  "description": "Problem-sustaining patterns CLI scripts",
+  "type": "module",
+  "types": "./lib/cli.d.ts",
+  "scripts": {
+    "build": "tsc -p .",
+    "lint": "eslint src/ --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    "./cli.js": "./lib/cli.js"
+  },
+  "bin": {
+    "patternjs": "lib/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patternsoflife/patterntools.git",
+    "directory": "patterns-ts-cli"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patternsoflife/patterntools/issues"
+  },
+  "homepage": "https://patternsoflife.nl/en/",
+  "dependencies": {
+    "@patternsoflife/patterns": "1.0.0-alpha.7",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/yargs": "^17.0.35",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.35.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
