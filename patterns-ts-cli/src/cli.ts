@@ -17,6 +17,14 @@ yargs(hideBin(process.argv))
   .help()
   .alias('h', 'help')
 
+  // Global options
+  .option('debug', {
+    type: 'boolean',
+    default: false,
+    global: true,
+    describe: 'output debug information while running',
+  })
+
   // Define the svg command.
   .command({
     command: 'svg <pattern>',
@@ -30,7 +38,7 @@ yargs(hideBin(process.argv))
     ),
     handler: async (argv) => {
       const { writeSVG } = await import('./svg.js');
-      await writeSVG(argv.pattern);
+      await writeSVG(argv.pattern, argv.debug);
     }
   })
 

@@ -54,7 +54,7 @@ const readPattern = async (patternPath: string): Promise<Pattern> => {
  * 
  * If the source file is pattern.json the output will be pattern.svg.
  */
-export const writeSVG = async (patternPath: string) => {
+export const writeSVG = async (patternPath: string, debug: boolean) => {
   try {
     const destPath = `${path.parse(patternPath).name}.svg`;
     const pattern = await readPattern(patternPath);
@@ -62,7 +62,7 @@ export const writeSVG = async (patternPath: string) => {
     await writeFile(destPath, svg);
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
+      console.error(debug ? error : error.message);
       process.exitCode = 1;
     } else {
       throw error;
