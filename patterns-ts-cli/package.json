@@ -1,6 +1,6 @@
 {
   "name": "@patternsoflife/patterns-cli",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Problem-sustaining patterns CLI scripts",
   "type": "module",
   "types": "./lib/cli.d.ts",
@@ -25,8 +25,14 @@
     "url": "https://github.com/patternsoflife/patterntools/issues"
   },
   "homepage": "https://patternsoflife.nl/en/",
+  "keywords": [
+    "pattern",
+    "svg",
+    "node",
+    "cli"
+  ],
   "dependencies": {
-    "@patternsoflife/patterns": "1.0.0-alpha.7",
+    "@patternsoflife/patterns": "^1.0.0",
     "yargs": "^18.0.0"
   },
   "devDependencies": {
