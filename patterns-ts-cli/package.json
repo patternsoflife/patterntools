@@ -25,6 +25,12 @@
     "url": "https://github.com/patternsoflife/patterntools/issues"
   },
   "homepage": "https://patternsoflife.nl/en/",
+  "keywords": [
+    "pattern",
+    "svg",
+    "node",
+    "cli"
+  ],
   "dependencies": {
     "@patternsoflife/patterns": "^1.0.0",
     "yargs": "^18.0.0"
