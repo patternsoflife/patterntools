@@ -1,6 +1,6 @@
 {
   "name": "@patternsoflife/patterns-cli",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Problem-sustaining patterns CLI scripts",
   "type": "module",
   "types": "./lib/cli.d.ts",
