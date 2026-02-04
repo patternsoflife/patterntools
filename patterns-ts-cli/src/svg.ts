@@ -32,13 +32,13 @@ const readData = async (dataPath: string) => {
  * Read a pattern from a json file and deserialize it.
  */
 const readPattern = async (patternPath: string): Promise<Pattern> => {
-  const [
-    contextCatData, roleCatData, nodeDefData, patternData
-  ] = await Promise.all([
-    "definitions/context_categories.json",
-    "definitions/role_categories.json",
-    "definitions/node_definitions.json",
-    patternPath
+  const patternData = await readData(patternPath);
+  const defPath = `definitions/${patternData.locale}`;
+
+  const [contextCatData, roleCatData, nodeDefData] = await Promise.all([
+    `${defPath}/context_categories.json`,
+    `${defPath}/role_categories.json`,
+    `${defPath}/node_definitions.json`
   ].map(readData));
 
   const deserializer = new PatternDeserializer(
