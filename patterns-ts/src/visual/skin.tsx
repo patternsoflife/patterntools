@@ -66,11 +66,13 @@ export const ArrowMarker = ({ id, className = '', selected = false, cairo = fals
 }) => (
   <Marker id={id} className={className || "react-flow__arrowhead"}>
     <polyline
-      stroke={selected ? COLOR.ARROW_SELECTED : COLOR.ARROW_MARKER}
+      style={{
+        strokeWidth: 1.5,
+        stroke: selected ? COLOR.ARROW_SELECTED : COLOR.ARROW_MARKER,
+        fill: 'none',
+      }}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="1.5"
-      fill="none"
       points="-7,-4 -0.5,0 -7,4"
       {...(cairo ? { strokeDasharray: "20 0.01" } : {})}
     />
