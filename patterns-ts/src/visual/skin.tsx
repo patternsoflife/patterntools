@@ -42,14 +42,14 @@ export const COLOR = {
 };
 
 
-const Marker = ({ id, className, children }) => (
+const Marker = ({ id, className, orient, children }) => (
   <marker
     className={className}
     id={id}
     markerWidth="20"
     markerHeight="20"
     viewBox="-10 -10 20 20"
-    orient="auto"
+    orient={orient}
     refX="0"
     refY="0"
   >
@@ -58,13 +58,14 @@ const Marker = ({ id, className, children }) => (
 );
 
 
-export const ArrowMarker = ({ id, className = '', selected = false, cairo = false }: {
+export const ArrowMarker = ({ id, className = '', selected = false, cairo = false, orient = 'auto' }: {
   id: string,
   className?: string,
   selected?: boolean,
   cairo?: boolean,
+  orient?: string,
 }) => (
-  <Marker id={id} className={className || "react-flow__arrowhead"}>
+  <Marker id={id} className={className || "react-flow__arrowhead"} orient={orient}>
     <polyline
       style={{
         strokeWidth: 1.5,
