@@ -31,8 +31,9 @@ const getEdgePosition = (node: PatternNode, intersectionPoint: { x: number, y: n
 };
 
 
-export const EdgeSVG = ({ edge }: {
+export const EdgeSVG = ({ edge, isBidirectional = false }: {
   edge: PatternEdge,
+  isBidirectional?: boolean,
 }) => {
   const [source, target] = edge.nodes;
 
@@ -52,6 +53,11 @@ export const EdgeSVG = ({ edge }: {
   });
 
   return (
-    <path d={d} className='p2s_arrowpath' markerEnd="url(#p2s_arrowmarker)" />
+    <path
+      d={d}
+      className='p2s_arrowpath'
+      markerEnd="url(#p2s_arrowmarker_end)"
+      {...(isBidirectional && { markerStart: 'url(#p2s_arrowmarker_start)' })}
+    />
   );
 };

@@ -4,7 +4,7 @@
 
 import React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { Pattern } from '../../core.js';
+import { Pattern, PatternEdge } from '../../core.js';
 import { PatternSVGConfig, SvgContext } from './config.js';
 import { SvgDocument } from './kit.js';
 import { NodeSVG } from './nodes.js';
@@ -31,6 +31,21 @@ export const PatternSVG = ({ pattern, config }: {
   const width = xEnd - xStart;
   const height = yEnd - yStart;
 
+  const edgeMap = new Map<string, { edge: PatternEdge, isBidirectional: boolean }>();
+
+  for (const edge of pattern.edges) {
+    const [s, t] = edge.nodes.map(node => node.crossRevisionId);
+    const key = `${s}-${t}`;
+    const reverseKey = `${t}-${s}`;
+
+    if (edgeMap.has(reverseKey)) {
+      edgeMap.set(reverseKey, { edge, isBidirectional: true });
+    } else {
+      edgeMap.set(key, { edge, isBidirectional: false });
+    }
+  }
+
+
   return (
     <SvgContext value={config}>
       <SvgDocument
@@ -38,9 +53,15 @@ export const PatternSVG = ({ pattern, config }: {
         size={[width, height]}
       >
         {
-          pattern.edges.map(edge => (
-            <EdgeSVG key={edge.crossRevisionId} edge={edge} />
-          ))
+          Array.from(edgeMap.entries(), ([key, { edge, isBidirectional }]) => {
+            return (
+              <EdgeSVG
+                key={key}
+                edge={edge}
+                isBidirectional={isBidirectional}
+              />
+            );
+          })
         }
         {
           pattern.nodes.map(node => (
