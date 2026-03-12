@@ -53,15 +53,13 @@ export const PatternSVG = ({ pattern, config }: {
         size={[width, height]}
       >
         {
-          Array.from(edgeMap.entries(), ([key, { edge, isBidirectional }]) => {
-            return (
-              <EdgeSVG
-                key={key}
-                edge={edge}
-                isBidirectional={isBidirectional}
-              />
-            );
-          })
+          Array.from(edgeMap.entries(), ([key, { edge, isBidirectional }]) => (
+            <EdgeSVG
+              key={key}
+              edge={edge}
+              isBidirectional={isBidirectional}
+            />
+          ))
         }
         {
           pattern.nodes.map(node => (
