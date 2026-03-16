@@ -187,7 +187,8 @@ export const SvgDocument = ({ pos, size, children }: {
         <symbol id='p2s_thought' viewBox='75 50 530 350'>
           <path fill={COLOR.CONTEXT_CAT[1].color} d={THOUGHT_PATH_DATA} />
         </symbol>
-        <ArrowMarker id='p2s_arrowmarker' className='p2s_arrowhead' cairo />
+        <ArrowMarker id='p2s_arrowmarker_end' className='p2s_arrowhead' cairo />
+        <ArrowMarker id='p2s_arrowmarker_start' className='p2s_arrowhead' cairo orient='auto-start-reverse' />
       </defs>
       <rect x={pos[0]} y={pos[1]} width={size[0]} height={size[1]} fill={COLOR.BG_AIR} />
       {children}
