@@ -29,6 +29,7 @@ export const COLOR = {
   ARROW: '#808080',
   ARROW_MARKER: '#909090',
   ARROW_SELECTED: '#008cff',
+  ARROW_HIGHLIGHTED: '#ee82ee',
   BG_AIR: '#f3faff',
   CARD: '#ffffff',
   CONTEXT_CAT: {
@@ -58,19 +59,19 @@ const Marker = ({ id, className, orient, children }) => (
 );
 
 
-export const ArrowMarker = ({ id, className = '', selected = false, cairo = false, orient = 'auto', color = COLOR.ARROW_MARKER }: {
+export const ArrowMarker = ({ id, className = '', selected = false, cairo = false, orient = 'auto', highlighted = false }: {
   id: string,
   className?: string,
   selected?: boolean,
   cairo?: boolean,
   orient?: string,
-  color?: string,
+  highlighted?: boolean,
 }) => (
   <Marker id={id} className={className || "react-flow__arrowhead"} orient={orient}>
     <polyline
       style={{
         strokeWidth: 1.5,
-        stroke: selected ? COLOR.ARROW_SELECTED : color,
+        stroke: selected ? COLOR.ARROW_SELECTED : highlighted ? COLOR.ARROW_HIGHLIGHTED : COLOR.ARROW_MARKER,
         fill: 'none',
       }}
       strokeLinecap="round"
