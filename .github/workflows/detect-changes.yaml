@@ -18,12 +18,12 @@ jobs:
       patterns-ts-cli: ${{ steps.filter.outputs.patterns-ts-cli }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Check for changes
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         id: filter
         with:
           base: ${{ github.event.pull_request != null && github.event.pull_request.base.sha || github.event.before }}
