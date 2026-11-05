@@ -10,8 +10,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write  # Required for OIDC
-  packages: write
 
 jobs:
   detect-changes:
@@ -42,6 +40,10 @@ jobs:
           package: ${{ matrix.package }}
 
   publish:
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write  # Required for OIDC
     needs: [detect-changes, quality-checks]
     runs-on: ubuntu-latest
 
@@ -91,8 +93,8 @@ jobs:
           if echo "$VERSION" | grep -q '-'; then
             TAG=$(echo "$VERSION" | tr -cd 'a-zA-Z')
             echo "Publishing ${{ matrix.package }} version $VERSION with tag $TAG"
-            npm publish --access public --tag "$TAG"
+            npm publish --access public --tag "$TAG" --provenance
           else
             echo "Publishing ${{ matrix.package }} version $VERSION as latest"
-            npm publish --access public
+            npm publish --access public --provenance
           fi
