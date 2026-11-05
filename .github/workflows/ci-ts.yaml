@@ -32,10 +32,10 @@ jobs:
     steps:
       - name: Checkout repository
         if: matrix.changed == true
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.1.0
 
       - name: Run quality checks
         if: matrix.changed == true
-        uses: ./.github/actions/quality-checks-ts
+        uses: $/.github/actions/quality-checks-ts
         with:
           package: ${{ matrix.package }}
