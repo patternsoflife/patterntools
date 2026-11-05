@@ -10,14 +10,12 @@ on:
 
 permissions:
   contents: read
-  id-token: write  # Required for OIDC
-  packages: write
 
 jobs:
   detect-changes:
     uses: ./.github/workflows/detect-changes.yaml
 
-  quality-checks:
+  build:
     needs: detect-changes
     runs-on: ubuntu-latest
 
@@ -33,16 +31,53 @@ jobs:
     steps:
       - name: Checkout repository
         if: matrix.changed == true
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
 
-      - name: Run quality checks
+      - name: Install, lint and typecheck
         if: matrix.changed == true
-        uses: ./.github/actions/quality-checks-ts
+        uses: $/.github/actions/quality-checks-ts
         with:
           package: ${{ matrix.package }}
 
+      - name: Build package
+        if: matrix.changed == true
+        working-directory: ${{ matrix.package }}
+        run: npm run build
+
+      - name: Add license
+        if: matrix.changed == true
+        run: cp LICENSE ${{ matrix.package }}/
+
+      - name: Review package contents
+        if: matrix.changed == true
+        working-directory: ${{ matrix.package }}
+        run: npm pack --dry-run
+
+      - name: Pack tarball
+        if: matrix.changed == true
+        working-directory: ${{ matrix.package }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/pack"
+          npm pack --pack-destination "$RUNNER_TEMP/pack"
+          sha256sum "$RUNNER_TEMP"/pack/*.tgz
+
+      - name: Upload tarball
+        if: matrix.changed == true
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: tarball-${{ matrix.package }}
+          path: ${{ runner.temp }}/pack/*.tgz
+          if-no-files-found: error
+          retention-days: 7
+
   publish:
-    needs: [detect-changes, quality-checks]
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write  # Required for OIDC
+    needs: [detect-changes, build]
     runs-on: ubuntu-latest
 
     strategy:
@@ -55,44 +90,33 @@ jobs:
             changed: ${{ needs.detect-changes.outputs.patterns-ts-cli == 'true' }}
 
     steps:
-      - name: Checkout repository
-        if: matrix.changed == true
-        uses: actions/checkout@v6
-
       - name: Set up Node.js
         if: matrix.changed == true
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6.5.0
         with:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
+      - name: Download tarball
         if: matrix.changed == true
-        run: |
-          cd ${{ matrix.package }}
-          npm ci
-
-      - name: Build package
-        if: matrix.changed == true
-        run: |
-          cd ${{ matrix.package }}
-          npm run build
-
-      - name: Add license
-        if: matrix.changed == true
-        run: cp LICENSE ${{ matrix.package }}/
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: tarball-${{ matrix.package }}
+          path: ${{ runner.temp }}/pack
 
       - name: Publish package
         if: matrix.changed == true
+        working-directory: ${{ runner.temp }}/pack
         run: |
-          cd ${{ matrix.package }}
-          VERSION=$(jq -r .version package.json)
+          TARBALL=$(ls ./*.tgz)
+          sha256sum "$TARBALL"
+          VERSION=$(tar -xzOf "$TARBALL" package/package.json | jq -r .version)
 
           if echo "$VERSION" | grep -q '-'; then
             TAG=$(echo "$VERSION" | tr -cd 'a-zA-Z')
             echo "Publishing ${{ matrix.package }} version $VERSION with tag $TAG"
-            npm publish --access public --tag "$TAG"
+            npm publish "$TARBALL" --access public --tag "$TAG" --provenance
           else
             echo "Publishing ${{ matrix.package }} version $VERSION as latest"
-            npm publish --access public
+            npm publish "$TARBALL" --access public --provenance
           fi
