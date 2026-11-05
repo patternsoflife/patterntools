@@ -2,7 +2,7 @@
  * Pattern Explorer SVG conversion kit.
  */
 
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode, use } from 'react';
 import { COLOR, CARD_SIZE_THOUGHT, ArrowMarker } from '../skin.js';
 import { SvgContext } from './config.js';
 
@@ -68,7 +68,7 @@ export const Card = ({ pos, size, children }: {
   size: [number, number],
   children: ReactNode,
 }) => {
-  const { useDropShadows } = useContext(SvgContext);
+  const { useDropShadows } = use(SvgContext);
   return (
     <g>
       {useDropShadows || <AltShadow pos={pos} size={size} />}
@@ -121,6 +121,8 @@ export const TextBox = ({ pos, text, lineHeight, className, maxLines = 0 }: {
   return <>{
     lines.map((line, index) => (
       <text
+        // Lines are positional and may repeat, so the index is the only stable key.
+        // eslint-disable-next-line @eslint-react/no-array-index-key
         key={index.toString()}
         x={pos[0]}
         y={pos[1] + (lineHeight * index)}
@@ -149,7 +151,7 @@ export const SvgDocument = ({ pos, size, children }: {
   size: [number, number],
   children: ReactNode,
 }) => {
-  const { useDropShadows } = useContext(SvgContext);
+  const { useDropShadows } = use(SvgContext);
   return (
     <svg
       viewBox={`${pos[0]} ${pos[1]} ${size[0]} ${size[1]}`}
