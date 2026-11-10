@@ -18,53 +18,43 @@ jobs:
   build:
     needs: detect-changes
     runs-on: ubuntu-latest
+    if: needs.detect-changes.outputs.packages != '[]'
+    defaults:
+      run:
+        working-directory: ${{ matrix.package }}
 
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - package: patterns-ts
-            changed: ${{ needs.detect-changes.outputs.patterns-ts == 'true' }}
-          - package: patterns-ts-cli
-            changed: ${{ needs.detect-changes.outputs.patterns-ts-cli == 'true' }}
+        package: ${{ fromJSON(needs.detect-changes.outputs.packages) }}
 
     steps:
       - name: Checkout repository
-        if: matrix.changed == true
         uses: actions/checkout@v6.1.0
         with:
           persist-credentials: false
 
       - name: Install, lint and typecheck
-        if: matrix.changed == true
         uses: $/.github/actions/quality-checks-ts
         with:
           package: ${{ matrix.package }}
 
       - name: Build package
-        if: matrix.changed == true
-        working-directory: ${{ matrix.package }}
         run: npm run build
 
       - name: Add license
-        if: matrix.changed == true
-        run: cp LICENSE ${{ matrix.package }}/
+        run: cp "$GITHUB_WORKSPACE/LICENSE" .
 
       - name: Review package contents
-        if: matrix.changed == true
-        working-directory: ${{ matrix.package }}
         run: npm pack --dry-run
 
       - name: Pack tarball
-        if: matrix.changed == true
-        working-directory: ${{ matrix.package }}
         run: |
           mkdir -p "$RUNNER_TEMP/pack"
           npm pack --pack-destination "$RUNNER_TEMP/pack"
           sha256sum "$RUNNER_TEMP"/pack/*.tgz
 
       - name: Upload tarball
-        if: matrix.changed == true
         uses: actions/upload-artifact@v7.0.2
         with:
           name: tarball-${{ matrix.package }}
@@ -83,29 +73,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - package: patterns-ts
-            changed: ${{ needs.detect-changes.outputs.patterns-ts == 'true' }}
-          - package: patterns-ts-cli
-            changed: ${{ needs.detect-changes.outputs.patterns-ts-cli == 'true' }}
+        package: ${{ fromJSON(needs.detect-changes.outputs.packages) }}
 
     steps:
       - name: Set up Node.js
-        if: matrix.changed == true
         uses: actions/setup-node@v6.5.0
         with:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Download tarball
-        if: matrix.changed == true
         uses: actions/download-artifact@v8.0.2
         with:
           name: tarball-${{ matrix.package }}
           path: ${{ runner.temp }}/pack
 
       - name: Publish package
-        if: matrix.changed == true
         working-directory: ${{ runner.temp }}/pack
         run: |
           TARBALL=$(ls ./*.tgz)
