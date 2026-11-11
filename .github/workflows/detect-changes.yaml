@@ -3,12 +3,9 @@ name: Detect Package Changes
 on:
   workflow_call:
     outputs:
-      patterns-ts:
-        description: 'Whether patterns-ts has changes'
-        value: ${{ jobs.detect-changes.outputs.patterns-ts }}
-      patterns-ts-cli:
-        description: 'Whether patterns-ts-cli has changes'
-        value: ${{ jobs.detect-changes.outputs.patterns-ts-cli }}
+      packages:
+        description: 'JSON array of packages with changes'
+        value: ${{ jobs.detect-changes.outputs.packages}}
 
 jobs:
   detect-changes:
@@ -16,16 +13,18 @@ jobs:
     outputs:
       patterns-ts: ${{ steps.filter.outputs.patterns-ts }}
       patterns-ts-cli: ${{ steps.filter.outputs.patterns-ts-cli }}
+      packages: ${{ steps.filter.outputs.changes }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.1.0
         with:
           fetch-depth: 0
 
       - name: Check for changes
-        uses: dorny/paths-filter@v4
+        uses: dorny/paths-filter@v4.0.3
         id: filter
         with:
+          token: ''
           base: ${{ github.event.pull_request != null && github.event.pull_request.base.sha || github.event.before }}
           filters: |
             patterns-ts:

@@ -19,23 +19,18 @@ jobs:
   quality-checks:
     needs: detect-changes
     runs-on: ubuntu-latest
+    if: needs.detect-changes.outputs.packages != '[]'
 
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - package: patterns-ts
-            changed: ${{ needs.detect-changes.outputs.patterns-ts == 'true' }}
-          - package: patterns-ts-cli
-            changed: ${{ needs.detect-changes.outputs.patterns-ts-cli == 'true' }}
+        package: ${{ fromJSON(needs.detect-changes.outputs.packages) }}
 
     steps:
       - name: Checkout repository
-        if: matrix.changed == true
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.1.0
 
       - name: Run quality checks
-        if: matrix.changed == true
-        uses: ./.github/actions/quality-checks-ts
+        uses: $/.github/actions/quality-checks-ts
         with:
           package: ${{ matrix.package }}
