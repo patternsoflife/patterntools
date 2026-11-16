@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   detect-changes:
-    uses: ./.github/workflows/detect-changes.yaml
+    uses: $/.github/workflows/detect-changes.yaml
 
   build:
     needs: detect-changes
@@ -62,44 +62,48 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  publish:
+  publish-patterns:
     environment: npm-publish
     permissions:
       contents: read
-      id-token: write  # Required for OIDC
+      id-token: write  # Required for OIDC trusted publishing
     needs: [detect-changes, build]
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        package: ${{ fromJSON(needs.detect-changes.outputs.packages) }}
+    if: contains(fromJSON(needs.detect-changes.outputs.packages), 'patterns-ts')
 
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v6.5.0
+      - name: Checkout publish action
+        uses: actions/checkout@v6.1.0
         with:
-          node-version: '24.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Download tarball
-        uses: actions/download-artifact@v8.0.2
-        with:
-          name: tarball-${{ matrix.package }}
-          path: ${{ runner.temp }}/pack
+          persist-credentials: false
+          sparse-checkout: .github/actions
 
       - name: Publish package
-        working-directory: ${{ runner.temp }}/pack
-        run: |
-          TARBALL=$(ls ./*.tgz)
-          sha256sum "$TARBALL"
-          VERSION=$(tar -xzOf "$TARBALL" package/package.json | jq -r .version)
+        uses: $/.github/actions/publish-npm
+        with:
+          package: patterns-ts
 
-          if echo "$VERSION" | grep -q '-'; then
-            TAG=$(echo "$VERSION" | tr -cd 'a-zA-Z')
-            echo "Publishing ${{ matrix.package }} version $VERSION with tag $TAG"
-            npm publish "$TARBALL" --access public --tag "$TAG" --provenance
-          else
-            echo "Publishing ${{ matrix.package }} version $VERSION as latest"
-            npm publish "$TARBALL" --access public --provenance
-          fi
+  publish-patterns-cli:
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write  # Required for OIDC trusted publishing
+    # Depends on publish-patterns so a new patterns release lands on npm first.
+    # !failure() still lets this run when publish-patterns was skipped (CLI-only change).
+    needs: [detect-changes, build, publish-patterns]
+    runs-on: ubuntu-latest
+    if: >-
+      !cancelled() && !failure() &&
+      contains(fromJSON(needs.detect-changes.outputs.packages), 'patterns-ts-cli')
+
+    steps:
+      - name: Checkout publish action
+        uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
+          sparse-checkout: .github/actions
+
+      - name: Publish package
+        uses: $/.github/actions/publish-npm
+        with:
+          package: patterns-ts-cli
