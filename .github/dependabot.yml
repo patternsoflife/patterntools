@@ -4,18 +4,15 @@ updates:
 
   # NPM packages
   - package-ecosystem: "npm"
-    directories:
-      - '/patterns-ts'
-      - '/patterns-ts-cli'
+    directory: "/"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
+      semver-major-days: 30  # Wait for a major to settle before proposing it
     groups:
       minor-and-patch:
         update-types: ["minor", "patch"]
-      dev-dependencies:
-        dependency-type: "development"
     labels: ["Dependencies"]
     ignore:
       - dependency-name: "@types/node"
