@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6.1.0
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
@@ -73,7 +73,7 @@ jobs:
 
     steps:
       - name: Checkout publish action
-        uses: actions/checkout@v6.1.0
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
           sparse-checkout: .github/actions
@@ -98,7 +98,7 @@ jobs:
 
     steps:
       - name: Checkout publish action
-        uses: actions/checkout@v6.1.0
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
           sparse-checkout: .github/actions
