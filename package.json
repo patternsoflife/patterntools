@@ -1,0 +1,24 @@
+{
+    "name": "patterntools",
+    "private": true,
+    "workspaces": ["patterns-ts", "patterns-ts-cli"],
+    "repository": "git@github.com:patternsoflife/patterntools.git",
+    "license": "MIT",
+    "scripts": {
+        "build": "npm run build --workspaces --if-present",
+        "lint": "npm run lint --workspaces --if-present",
+        "typecheck": "npm run typecheck --workspaces --if-present"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.13.0",
+        "globals": "^17.13.0",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.72.1"
+    },
+    "packageManager": "npm@11.19.0",
+    "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+    }
+
+}

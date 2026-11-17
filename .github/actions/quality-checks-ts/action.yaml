@@ -16,9 +16,13 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: |
-        cd ${{ inputs.package }}
-        npm ci
+      run: npm ci
+
+    - name: Build workspace dependencies
+      shell: bash
+      # Workspace packages resolve to their built output (lib/), so the
+      # patterns package must be built before patterns-ts-cli can typecheck.
+      run: npm run build -w patterns-ts
 
     - name: Run linting
       shell: bash

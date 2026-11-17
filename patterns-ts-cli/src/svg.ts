@@ -1,6 +1,6 @@
 /**
  * Implementation of the svg command.
- * 
+ *
  * Read a pattern from a json file and write it to an svg file.
  */
 
@@ -20,7 +20,7 @@ const readData = async (dataPath: string) => {
     return JSON.parse(data);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`Cannot read data from ${dataPath}:\n${error.message}`);
+      throw new Error(`Cannot read data from ${dataPath}:\n${error.message}`, error);
     } else {
       throw error;
     }
@@ -51,7 +51,7 @@ const readPattern = async (patternPath: string): Promise<Pattern> => {
 
 /**
  * Write a pattern from a json file to an svg file.
- * 
+ *
  * If the source file is pattern.json the output will be pattern.svg.
  */
 export const writeSVG = async (patternPath: string, debug: boolean) => {

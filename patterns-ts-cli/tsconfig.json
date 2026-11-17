@@ -4,7 +4,7 @@
 
     /*
      * Which javascript features to use in the compiled output files.
-     * 
+     *
      * Web application bundlers will transpile the emitted code further down
      * when this package is imported. Node applications should run on recent
      * node versions that support current javascript features. Therefore, we
@@ -21,9 +21,9 @@
      */
     "lib": ["esnext"],
 
-    /* 
+    /*
      * The module output format.
-     * 
+     *
      * We use "nodenext" in combination with the "type": "module" setting in
      * package.json, which will cause .ts files to be compiled as ESM modules
      * and written to .js files. This is the recommended setting for libraries
@@ -66,6 +66,9 @@
     "strict": true,
 
     /* Skip type checking all .d.ts files. */
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    /* Include node types */
+    "types": ["node"],
   }
 }

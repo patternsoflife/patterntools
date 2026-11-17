@@ -1,9 +1,12 @@
 {
   "name": "@patternsoflife/patterns-cli",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Problem-sustaining patterns CLI scripts",
   "type": "module",
   "types": "./lib/cli.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "tsc -p .",
     "lint": "eslint src/ --ext .ts",
@@ -32,15 +35,12 @@
     "cli"
   ],
   "dependencies": {
-    "@patternsoflife/patterns": "^1.0.1",
-    "yargs": "^18.0.0"
+    "@patternsoflife/patterns": "^1.1.0",
+    "yargs": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@types/yargs": "^17.0.35",
-    "eslint": "^9.39.1",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.35.0"
+    "@types/node": "^20.19.43",
+    "@types/yargs": "^17.0.35"
   },
   "publishConfig": {
     "access": "public"

@@ -1,0 +1,41 @@
+name: 'Publish npm package'
+description: 'Download a built tarball and publish it to npm'
+
+inputs:
+  package:
+    description: 'Package directory name (matches the tarball artifact name, e.g. patterns-ts)'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v6.5.0
+      with:
+        node-version: '24.x'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Download tarball
+      uses: actions/download-artifact@v8.0.2
+      with:
+        name: tarball-${{ inputs.package }}
+        path: ${{ runner.temp }}/pack
+
+    - name: Publish package
+      shell: bash
+      working-directory: ${{ runner.temp }}/pack
+      env:
+        PACKAGE: ${{ inputs.package }}
+      run: |
+        TARBALL=$(ls ./*.tgz)
+        sha256sum "$TARBALL"
+        VERSION=$(tar -xzOf "$TARBALL" package/package.json | jq -r .version)
+
+        if [[ "$VERSION" == *-* ]]; then
+          TAG=$(echo "$VERSION" | tr -cd 'a-zA-Z')
+          echo "Publishing $PACKAGE version $VERSION with tag $TAG"
+          npm publish "$TARBALL" --access public --tag "$TAG" --provenance
+        else
+          echo "Publishing $PACKAGE version $VERSION as latest"
+          npm publish "$TARBALL" --access public --provenance
+        fi
